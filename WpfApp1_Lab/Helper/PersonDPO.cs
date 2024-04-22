@@ -13,91 +13,112 @@ namespace WpfApp1_Lab.Helper
 {
     public class PersonDPO : INotifyPropertyChanged
     {
-        private int _id;
-        private string _role;
-        private string _firstName;
-        private string _lastName;
-        private DateTime _birthday;
-
-        public int Id
+        /// <summary>
+        /// код сотрудника
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// должность сотрудника
+        /// </summary>
+        private string _roleName;
+        /// <summary>
+        /// должность сотрудника
+        /// </summary>
+        public string RoleName
         {
-            get { return _id; }
+            get { return _roleName; }
             set
             {
-                if (_id != value)
-                {
-                    _id = value;
-                    OnPropertyChanged();
-                }
+                _roleName = value;
+                OnPropertyChanged("RoleName");
             }
         }
-
-        public string Role
+        /// <summary>
+        /// имя сотрудника
+        /// </summary>
+        private string firstName;
+ /// <summary>
+ /// имя сотрудника
+ /// </summary>
+ public string FirstName
         {
-            get { return _role; }
+            get { return firstName; }
             set
             {
-                if (_role != value)
-                {
-                    _role = value;
-                    OnPropertyChanged();
-                }
+                firstName = value;
+                OnPropertyChanged("FirstName");
             }
         }
-
-        public string FirstName
-        {
-            get { return _firstName; }
-            set
-            {
-                if (_firstName != value)
-                {
-                    _firstName = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
+        /// <summary>
+        /// фамилия сотрудника
+        /// </summary>
+        private string lastName;
+        /// <summary>
+        /// фамилия сотрудника
+        /// </summary>
         public string LastName
         {
-            get { return _lastName; }
+            get { return lastName; }
             set
             {
-                if (_lastName != value)
-                {
-                    _lastName = value;
-                    OnPropertyChanged();
-                }
+                lastName = value;
+                OnPropertyChanged("LastName");
             }
         }
 
+        private Role _selectedRole;
+
+        public Role SelectedRole
+        {
+            get { return _selectedRole; }
+            set
+            {
+                _selectedRole = value;
+                OnPropertyChanged("SelectedRole");
+            }
+        }
+        /// <summary>
+        /// дата рождения сотрудника
+        /// </summary>
+        private DateTime birthday;
+        /// <summary>
+        /// дата рождения сотрудника
+        /// </summary>
         public DateTime Birthday
         {
-            get { return _birthday; }
+            get { return birthday; }
             set
             {
-                if (_birthday != value)
-                {
-                    _birthday = value;
-                    OnPropertyChanged();
-                }
+                birthday = value;
+                OnPropertyChanged("Birthday");
             }
         }
-
         public PersonDPO() { }
-
-        public PersonDPO(int id, string role, string firstName, string lastName, DateTime birthday)
+        public PersonDPO(int id, string roleName, string firstName,
+       string lastName, DateTime birthday)
         {
             this.Id = id;
-            this.Role = role;
+            this.RoleName = roleName;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Birthday = birthday;
         }
-
+        /// <summary>
+        /// Метод поверхностного копирования 
+        /// </summary>
+        /// <returns></returns>
+        public PersonDPO ShallowCopy()
+        {
+            return (PersonDPO)this.MemberwiseClone();
+        }
+        /// <summary>
+        /// копирование данных из класса Person
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
         public PersonDPO CopyFromPerson(Person person)
         {
-            PersonDPO perDPO = new PersonDPO();
+            PersonDPO perDpo = new PersonDPO();
             RoleViewModel vmRole = new RoleViewModel();
             string role = string.Empty;
             foreach (var r in vmRole.ListRole)
@@ -110,22 +131,17 @@ namespace WpfApp1_Lab.Helper
             }
             if (role != string.Empty)
             {
-                perDPO.Id = person.Id;
-                perDPO.Role = role;
-                perDPO.FirstName = person.FirstName;
-                perDPO.LastName = person.LastName;
-                perDPO.Birthday = person.Birthday;
+                perDpo.Id = person.Id;
+                perDpo.RoleName = role;
+                perDpo.FirstName = person.FirstName;
+                perDpo.LastName = person.LastName;
+                perDpo.Birthday = person.Birthday;
             }
-            return perDPO;
+            return perDpo;
         }
-        public PersonDPO ShallowCopy()
-        {
-            return (PersonDPO)this.MemberwiseClone();
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        protected virtual void OnPropertyChanged([CallerMemberName]
+string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

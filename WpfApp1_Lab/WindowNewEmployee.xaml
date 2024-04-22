@@ -27,7 +27,9 @@
         <TextBox x:Name="TbId" Grid.Row="0" Grid.Column="1" Text="{Binding Id}" Height="20" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="5" IsEnabled="False"/>
         <TextBox x:Name="TbLastName" Grid.Row="2" Grid.Column="1"  Text="{Binding LastName}" Height="20" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
             <TextBox x:Name="TbFirstName" Grid.Row="3" Grid.Column="1" Text="{Binding FirstName}" Height="20" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-        <ComboBox x:Name="CbRole" Grid.Row="1" Grid.Column="1" Height="20" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" DisplayMemberPath="NameRole"/>
+        <ComboBox x:Name="CbRole" Grid.Row="1" Grid.Column="1" Height="20" Width="130" 
+          HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" 
+          DisplayMemberPath="NameRole" SelectedItem="{Binding SelectedRole, Mode=TwoWay}"/>
         <DatePicker x:Name="ClBirthday" Grid.Row="4" Grid.Column="1" 
             SelectedDate="{Binding Birthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
             HorizontalAlignment="Left" VerticalAlignment="Center" 

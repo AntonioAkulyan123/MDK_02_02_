@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfApp1_Lab.Helper;
+using WpfApp1_Lab.Model;
+using WpfApp1_Lab.ViewModel;
 
 namespace WpfApp1_Lab
 {
@@ -24,6 +26,12 @@ namespace WpfApp1_Lab
         public WindowNewEmployee()
         {
             InitializeComponent();
+            DataContext = new PersonDPO();
+
+            //Установим контекст данных для ComboBox CbRole
+            RoleViewModel roleViewModel = new RoleViewModel();
+            CbRole.ItemsSource = roleViewModel.ListRole;
+            CbRole.DataContext = roleViewModel;
         }
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
@@ -32,15 +40,17 @@ namespace WpfApp1_Lab
             PersonDPO newEmployee = new PersonDPO
             {
                 Id = int.Parse(TbId.Text),
-                Role = CbRole.SelectedItem.ToString(),
+                RoleName = (CbRole.SelectedItem as Role)?.NameRole,
+                SelectedRole = CbRole.SelectedItem as Role, // Устанавливаем выбранную должность
                 FirstName = TbFirstName.Text,
                 LastName = TbLastName.Text,
                 Birthday = ClBirthday.SelectedDate.GetValueOrDefault()
             };
 
-            // Добавляем нового сотрудника в коллекцию или передаем его обратно в основное окно для сохранения
             DialogResult = true; // Устанавливаем результат окна как "true", чтобы указать, что сотрудник успешно добавлен
             Close(); // Закрываем окно
         }
+
+
     }
 }
