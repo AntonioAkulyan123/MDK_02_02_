@@ -21,7 +21,7 @@ namespace WpfApp1_Lab
     /// </summary>
     public partial class MainWindow : Window
     {
-        //fsdfsdfsdf
+        public static int IdEmployee { get; set; }
         public static int IdRole{get; set;}
         public MainWindow()
         {
