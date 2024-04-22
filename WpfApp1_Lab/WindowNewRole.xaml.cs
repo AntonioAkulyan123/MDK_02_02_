@@ -19,6 +19,7 @@ namespace WpfApp1_Lab
     /// </summary>
     public partial class WindowNewRole : Window
     {
+
         public WindowNewRole()
         {
             InitializeComponent();

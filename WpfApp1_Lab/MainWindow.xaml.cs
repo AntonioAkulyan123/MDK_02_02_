@@ -23,6 +23,7 @@ namespace WpfApp1_Lab
     {
         public static int IdEmployee { get; set; }
         public static int IdRole{get; set;}
+        public object EditRole { get; set; }
         public MainWindow()
         {
             InitializeComponent();

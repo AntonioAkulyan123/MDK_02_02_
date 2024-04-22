@@ -20,6 +20,7 @@ namespace WpfApp1_Lab
     /// </summary>
     public partial class WindowNewEmployee : Window
     {
+
         public WindowNewEmployee()
         {
             InitializeComponent();

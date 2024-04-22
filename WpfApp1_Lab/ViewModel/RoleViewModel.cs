@@ -1,17 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp1_Lab.Model;
+using WpfApp1_Lab.View;
+using WpfApp1_Lab.ViewModel;
+using WpfApp1_Lab.Helper;
+using System.Windows;
 
 namespace WpfApp1_Lab.ViewModel
 {
-    internal class RoleViewModel
+    public class RoleViewModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// выбранная в списке должность
+        /// </summary>
+        private Role selectedRole;
+        /// <summary>
+        /// выбранная в списке должность
+        /// </summary>
+        public Role SelectedRole
+        {
+            get
+            {
+                return selectedRole;
+            }
+            set
+            {
+                selectedRole = value;
+                OnPropertyChanged("SelectedRole");
+                EditRole.CanExecute(true);
+            }
+        }
+        /// <summary>
+        /// коллекция должностей сотрудников
+        /// </summary>
         public ObservableCollection<Role> ListRole { get; set; } = new
-   ObservableCollection<Role>();
+       ObservableCollection<Role>();
+
         public RoleViewModel()
         {
             this.ListRole.Add(new Role
@@ -29,7 +59,22 @@ namespace WpfApp1_Lab.ViewModel
                 Id = 3,
                 NameRole = "Менеджер"
             });
+            // Установка начального значения для SelectedRole (первый элемент из списка)
+            if (ListRole.Count > 0)
+            {
+                SelectedRole = ListRole[0];
+            }
+
+            // Уведомление об изменении SelectedRole
+            OnPropertyChanged("SelectedRole");
+
+            // Установка начального значения для EditRole.CanExecute
+            EditRole.CanExecute(true);
         }
+        /// <summary>
+        /// Нахождение максимального Id в коллекции
+        /// </summary>
+        /// <returns></returns>
         public int MaxId()
         {
             int max = 0;
@@ -41,6 +86,80 @@ namespace WpfApp1_Lab.ViewModel
                 };
             }
             return max;
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// команда добавления новой должности
+        private RelayCommand addRole;
+        public RelayCommand AddRole
+        {
+            get
+            {
+                return addRole ??
+                (addRole = new RelayCommand(obj =>
+                {
+                    WindowNewRole wnRole = new WindowNewRole
+                    {
+                        Title = "Новая должность",
+                    };
+                    // формирование кода новой должности
+                    int maxIdRole = MaxId() + 1;
+                    Role role = new Role { Id = maxIdRole };
+                    wnRole.DataContext = role;
+                    if (wnRole.ShowDialog() == true)
+                    {
+                        ListRole.Add(role);
+                    }
+                    SelectedRole = role;
+                }));
+            }
+        }
+
+        private RelayCommand editRole;
+        public RelayCommand EditRole
+        {
+            get
+            {
+                return editRole ??
+                (editRole = new RelayCommand(obj =>
+                {
+                    WindowNewRole wnRole = new WindowNewRole
+                    {
+                        Title = "Редактирование должности",
+                    };
+                    Role role = SelectedRole;
+                    Role tempRole = new Role();
+                    tempRole = role.ShallowCopy();
+                    wnRole.DataContext = tempRole;
+                    if (wnRole.ShowDialog() == true)
+                    {
+                        // сохранение данных в оперативной памяти
+                        role.NameRole = tempRole.NameRole;
+                    }
+                }, (obj) => SelectedRole != null && ListRole.Count > 0));
+            }
+        }
+
+        private RelayCommand deleteRole;
+        public RelayCommand DeleteRole
+        {
+            get
+            {
+                return deleteRole ??
+                (deleteRole = new RelayCommand(obj =>
+                {
+                    Role role = SelectedRole;
+                    MessageBoxResult result = MessageBox.Show("Удалить данные по  должности: " + role.NameRole, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        ListRole.Remove(role);
+                    }
+                }, (obj) => SelectedRole != null && ListRole.Count > 0));
+            }
         }
     }
 }
