@@ -32,11 +32,16 @@ namespace WpfApp1_Lab.View
             InitializeComponent();
             vmRole = new RoleViewModel();
             DataContext = vmRole;
-            lvRole.ItemsSource = vmRole.ListRole;
         }
 
+        private void RoleListView_Select(object sender, SelectionChangedEventArgs e)
+        {
+            if (LvRole.SelectedItem != null)
+            {
+                vmRole.SelectedRole = (Role)LvRole.SelectedItem;
+            }
+        }
     }
 }
-        
-    
+
 
