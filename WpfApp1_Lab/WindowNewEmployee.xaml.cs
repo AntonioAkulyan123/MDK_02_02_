@@ -22,35 +22,16 @@ namespace WpfApp1_Lab
     /// </summary>
     public partial class WindowNewEmployee : Window
     {
-
+        private RoleViewModel roleViewModel;
         public WindowNewEmployee()
         {
             InitializeComponent();
-            DataContext = new PersonDPO();
-
-            //Установим контекст данных для ComboBox CbRole
-            RoleViewModel roleViewModel = new RoleViewModel();
-            CbRole.ItemsSource = roleViewModel.ListRole;
-            CbRole.DataContext = roleViewModel;
+            CbRole.ItemsSource = new RoleViewModel().ListRole;
         }
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            // Создаем новый объект сотрудника с данными из текстовых полей и комбо-бокса
-            PersonDPO newEmployee = new PersonDPO
-            {
-                Id = int.Parse(TbId.Text),
-                RoleName = (CbRole.SelectedItem as Role)?.NameRole,
-                SelectedRole = CbRole.SelectedItem as Role, // Устанавливаем выбранную должность
-                FirstName = TbFirstName.Text,
-                LastName = TbLastName.Text,
-                Birthday = ClBirthday.SelectedDate.GetValueOrDefault()
-            };
-
-            DialogResult = true; // Устанавливаем результат окна как "true", чтобы указать, что сотрудник успешно добавлен
-            Close(); // Закрываем окно
+            DialogResult = true;
         }
-
-
     }
 }

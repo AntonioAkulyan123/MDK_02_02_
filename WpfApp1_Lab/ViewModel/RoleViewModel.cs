@@ -39,8 +39,7 @@ namespace WpfApp1_Lab.ViewModel
         /// <summary>
         /// коллекция должностей сотрудников
         /// </summary>
-        public ObservableCollection<Role> ListRole { get; set; } = new
-       ObservableCollection<Role>();
+        public ObservableCollection<Role> ListRole { get; } = new ObservableCollection<Role>();
 
         public RoleViewModel()
         {

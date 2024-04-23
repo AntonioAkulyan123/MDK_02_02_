@@ -24,19 +24,20 @@ namespace WpfApp1_Lab.View
     /// </summary>
     public partial class WindowEmployee : Window
     {
+        PersonViewModel vmPerson;
         public WindowEmployee()
         {
             InitializeComponent();
-            DataContext = new PersonViewModel();
+            vmPerson = new PersonViewModel();
+            DataContext = vmPerson;
         }
-        private void lvEmployee_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void EmployeeListView_Select(object sender, SelectionChangedEventArgs e)
         {
             if (lvEmployee.SelectedItem != null)
             {
                 var selectedPerson = lvEmployee.SelectedItem as PersonDPO;
-                ((PersonViewModel)DataContext).SelectedPersonDpo = selectedPerson;
+                vmPerson.SelectedPersonDpo = selectedPerson;
             }
         }
-
     }
 }
