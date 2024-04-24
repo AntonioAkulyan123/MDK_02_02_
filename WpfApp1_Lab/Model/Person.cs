@@ -47,6 +47,5 @@ namespace WpfApp1_Lab.Model
             }
             return this;
         }
-
     }
 }
