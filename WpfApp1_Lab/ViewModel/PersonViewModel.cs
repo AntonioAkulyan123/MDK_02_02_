@@ -16,7 +16,7 @@ namespace WpfApp1_Lab.ViewModel
 {
     internal class PersonViewModel : INotifyPropertyChanged
     {
-        readonly string path = @"G:\ЧТОТиБ\3 курс\Эвелина Павловна\МДК 02 02\WpfApp1_Lab\WpfApp1_Lab\DataModels\PersonData.json";
+        readonly string path = @"E:\ЧТОТиБ\3 курс\Эвелина Павловна\МДК 02 02\WpfApp1_Lab\WpfApp1_Lab\DataModels\PersonData.json";
         string _jsonPersons = String.Empty;
         public string Error { get; set; }
         public ObservableCollection<Person> LoadPerson()

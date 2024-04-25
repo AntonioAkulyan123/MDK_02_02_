@@ -24,6 +24,7 @@ namespace WpfApp1_Lab.View
     /// </summary>
     public partial class WindowEmployee : Window
     {
+        //Привет
         PersonViewModel vmPerson;
         public WindowEmployee()
         {
