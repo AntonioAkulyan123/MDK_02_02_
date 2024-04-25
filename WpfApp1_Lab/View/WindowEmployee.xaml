@@ -8,18 +8,18 @@
         Title="Сотрудники" Height="300" Width="500">
     <StackPanel>
         <StackPanel Orientation="Horizontal" Background="#FFE4E0E0">
-            <Button x:Name="btnAdd" Margin="10,10,5,10" Content="Добавить" Height="25" Command="{Binding AddPerson}"/>
-            <Button x:Name="btnEdit" Margin="10,10,5,10" Content="Редактировать" Height="25" Command="{Binding EditPerson}"/>
-            <Button x:Name="btnDelete" Margin="10,10,5,10" Content="Удалить" Height="25" Command="{Binding DeletePerson}"/>
+            <Button Style="{StaticResource ButtonMenu}" x:Name="btnAdd" Margin="10,10,5,10" Content="Добавить" Height="25" Command="{Binding AddPerson}"/>
+            <Button Style="{StaticResource ButtonMenu}" x:Name="btnEdit" Margin="10,10,5,10" Content="Редактировать" Height="25" Command="{Binding EditPerson}"/>
+            <Button Style="{StaticResource ButtonMenu}" x:Name="btnDelete" Margin="10,10,5,10" Content="Удалить" Height="25" Command="{Binding DeletePerson}"/>
         </StackPanel>
-        <ListView x:Name="lvEmployee" ItemsSource="{Binding ListPersonDpo}" SelectionChanged="EmployeeListView_Select">
+        <ListView x:Name="lvEmployee" ItemsSource="{Binding ListPerson}" SelectionChanged="EmployeeListView_Select">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="Код" Width="50" DisplayMemberBinding="{Binding Id}"/>
                         <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding LastName}"/>
                         <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName}"/>
-                        <GridViewColumn Header="Должность" DisplayMemberBinding="{Binding RoleName}"/>
+                        <GridViewColumn Header="Должность" Width="100" DisplayMemberBinding="{Binding Role.NameRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding Birthday, StringFormat={}{0:dd\.}{0:MM\.}{0:yyyy}}"/>
                     </GridView.Columns>
                 </GridView>

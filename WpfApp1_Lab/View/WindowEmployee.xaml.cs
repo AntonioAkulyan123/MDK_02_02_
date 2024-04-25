@@ -24,21 +24,22 @@ namespace WpfApp1_Lab.View
     /// </summary>
     public partial class WindowEmployee : Window
     {
-        //Привет
-        PersonViewModel vmPerson;
+        private RoleViewModel vmRole;
+        private List<Role> roles;
         public WindowEmployee()
         {
             InitializeComponent();
-            vmPerson = new PersonViewModel();
-            DataContext = vmPerson;
+            vmRole = new RoleViewModel();
+            roles = vmRole.ListRole.ToList();
+
+            DataContext = new PersonViewModel();
         }
         private void EmployeeListView_Select(object sender, SelectionChangedEventArgs e)
         {
-            if (lvEmployee.SelectedItem != null)
-            {
-                var selectedPerson = lvEmployee.SelectedItem as PersonDPO;
-                vmPerson.SelectedPersonDpo = selectedPerson;
-            }
+            ListView s = (ListView)sender;
+            Person p = (Person)s.SelectedItem;
+
+            ((PersonViewModel)DataContext).SelectedPerson = p;
         }
     }
 }

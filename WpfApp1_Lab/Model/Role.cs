@@ -6,49 +6,20 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp1_Lab.ViewModel;
 
 namespace WpfApp1_Lab.Model
 {
-    public class Role : INotifyPropertyChanged
+    public class Role
     {
-        /// <summary>
-        /// код должности
-        /// </summary>
         public int Id { get; set; }
-        /// <summary>
-        /// наименование должности
-        /// </summary>
-        private string nameRole;
-        /// <summary>
-        /// наименование должности
-        /// </summary>
-        public string NameRole
+        public string NameRole { get; set; }
+        public Role()
         {
-            get { return nameRole; }
-            set
-            {
-                nameRole = value;
-                OnPropertyChanged("NameRole");
-            }
+            this.Persons = new HashSet<Person>();
         }
-        public Role() { }
-        public Role(int id, string nameRole)
-        {
-            this.Id = id;
-            this.NameRole = nameRole;
-        }
-        /// <summary>
-        /// Метод поверхностного копирования 
-        /// </summary>
-        /// <returns></returns>
-        public Role ShallowCopy()
-        {
-            return (Role)this.MemberwiseClone();
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public virtual ICollection<Person> Persons { get; set; }
+
+        public static implicit operator Role(PersonViewModel v) => throw new NotImplementedException();
     }
 }
